@@ -1,5 +1,7 @@
 'use client'
 
+import { getTodayLocal } from '@/lib/utils/date'
+
 interface CalendarProps {
   year: number
   month: number
@@ -51,8 +53,7 @@ export default function Calendar({
   }
 
   const calendar = generateCalendar()
-  const now = new Date()
-  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+  const today = getTodayLocal()
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-4">

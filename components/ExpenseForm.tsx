@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { addExpense } from '@/lib/actions/expenses'
 import { Category } from '@/lib/actions/categories'
+import { getTodayLocal } from '@/lib/utils/date'
 import { useRouter } from 'next/navigation'
 
 interface ExpenseFormProps {
@@ -26,13 +27,11 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
 
     setIsLoading(true)
     try {
-      const now = new Date()
-      const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
       await addExpense({
         amount: parseInt(amount),
         category_id: categoryId,
         memo,
-        expense_date: today,
+        expense_date: getTodayLocal(),
       })
 
       // フォームをリセット

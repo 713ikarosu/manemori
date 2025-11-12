@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { deleteExpense, updateExpense, Expense } from '@/lib/actions/expenses'
 import { Category } from '@/lib/actions/categories'
+import { getTodayLocal } from '@/lib/utils/date'
 import { useRouter } from 'next/navigation'
 
 interface TodayExpensesProps {
@@ -31,13 +32,11 @@ export default function TodayExpenses({
   const handleSaveEdit = async (expenseId: string) => {
     setIsLoading(true)
     try {
-      const now = new Date()
-      const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
       await updateExpense(expenseId, {
         amount: parseInt(editAmount),
         category_id: editCategoryId,
         memo: editMemo,
-        expense_date: today,
+        expense_date: getTodayLocal(),
       })
       setEditingId(null)
       router.refresh()

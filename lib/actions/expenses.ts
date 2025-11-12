@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { formatDateLocal } from '@/lib/utils/date'
 
 export interface Expense {
   id: string
@@ -87,8 +88,8 @@ export async function getWeeklyExpenses() {
   const monday = new Date(today)
   monday.setDate(today.getDate() + diff)
 
-  const startDate = `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, '0')}-${String(monday.getDate()).padStart(2, '0')}`
-  const endDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+  const startDate = formatDateLocal(monday)
+  const endDate = formatDateLocal(today)
 
   const { data, error } = await supabase
     .from('expenses')

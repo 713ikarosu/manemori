@@ -7,6 +7,7 @@ import {
   getWeeklyExpenses,
 } from '@/lib/actions/expenses'
 import { getCategories } from '@/lib/actions/categories'
+import { getTodayLocal } from '@/lib/utils/date'
 import BudgetSection from '@/components/BudgetSection'
 import RemainingSection from '@/components/RemainingSection'
 import ExpenseForm from '@/components/ExpenseForm'
@@ -27,9 +28,7 @@ export default async function Home() {
   const today = new Date()
   const year = today.getFullYear()
   const month = today.getMonth() + 1
-
-  // ローカルタイムゾーンで日付を取得
-  const todayStr = `${year}-${String(month).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+  const todayStr = getTodayLocal()
 
   // 並列でデータ取得
   const [monthlyBudget, monthlyExpenses, weeklyExpenses, todayExpenses, categories] =
