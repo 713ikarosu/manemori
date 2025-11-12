@@ -11,7 +11,7 @@ export interface Expense {
   memo: string | null
   categories: {
     name: string
-  }
+  } | null
 }
 
 export async function getExpenses(date: string) {
@@ -26,14 +26,22 @@ export async function getExpenses(date: string) {
 
   const { data, error } = await supabase
     .from('expenses')
-    .select('id, amount, category_id, expense_date, memo, categories(name)')
+    .select('id, amount, category_id, expense_date, memo, categories!inner(name)')
     .eq('user_id', user.id)
     .eq('expense_date', date)
     .order('created_at', { ascending: false })
 
   if (error) throw error
 
-  return data as Expense[]
+  // データを適切な型に変換
+  const expenses = (data || []).map((item: any) => ({
+    ...item,
+    categories: Array.isArray(item.categories)
+      ? item.categories[0]
+      : item.categories
+  }))
+
+  return expenses as Expense[]
 }
 
 export async function getMonthlyExpenses(year: number, month: number) {

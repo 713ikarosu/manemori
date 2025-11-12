@@ -136,7 +136,7 @@ export default function TodayExpenses({
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-semibold text-gray-800">
-                      {expense.categories.name}
+                      {expense.categories?.name || 'カテゴリなし'}
                     </span>
                     <span className="text-lg font-bold text-gray-800">
                       ¥{expense.amount.toLocaleString()}
