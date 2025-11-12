@@ -1,36 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# まねもり 💰
 
-## Getting Started
+**まねもり (Manemori)** は、日々の支出を簡単に管理できる個人向けWebアプリケーションです。
 
-First, run the development server:
+月次予算を設定して、日別・週別の支出を視覚的に把握できます。
+
+## 主な機能
+
+- 📊 **予算管理** - 月次予算の設定と自動計算（日別・週別平均）
+- 💳 **支出記録** - カテゴリ別に支出を記録・編集・削除
+- 📅 **カレンダー表示** - 日別の支出を色分けして表示
+  - 🟢 予算内
+  - 🟡 予算の1〜1.5倍
+  - 🔴 予算の1.5倍超
+- 📈 **リアルタイム集計** - 今日・今週・今月の支出と残高を自動計算
+- 🏷️ **カテゴリ管理** - 食費、交通費、日用品、娯楽、医療費、その他
+
+## 技術スタック
+
+- **フロントエンド**: Next.js 16 (App Router) + React 19 + TypeScript
+- **スタイリング**: Tailwind CSS 4
+- **バックエンド**: Supabase (PostgreSQL)
+- **認証**: Supabase Auth (Google OAuth)
+- **デプロイ**: Vercel
+
+## プロジェクト構成
+
+```
+manemori/
+├── app/                    # Next.js App Router
+│   ├── page.tsx           # メインダッシュボード
+│   ├── history/           # 履歴・カレンダービュー
+│   ├── login/             # ログインページ
+│   └── auth/callback/     # OAuth認証コールバック
+├── components/            # React UIコンポーネント
+├── lib/
+│   ├── supabase/         # Supabaseクライアント設定
+│   └── actions/          # Server Actions（データ操作）
+├── middleware.ts         # 認証ミドルウェア
+└── public/               # 静的ファイル
+```
+
+## セットアップ
+
+### 1. リポジトリをクローン
+
+```bash
+git clone https://github.com/yourusername/manemori.git
+cd manemori
+```
+
+### 2. 依存関係をインストール
+
+```bash
+npm install
+```
+
+### 3. 環境変数を設定
+
+プロジェクトルートに `.env.local` ファイルを作成：
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+**Supabaseの設定方法:**
+
+1. [Supabase](https://supabase.com/) でプロジェクトを作成
+2. Project Settings > API から URL と anon key を取得
+3. `.env.local` に設定
+
+### 4. データベースのセットアップ
+
+Supabaseのダッシュボードで以下のテーブルを作成：
+
+#### `categories` テーブル
+
+```sql
+CREATE TABLE categories (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  sort_order INTEGER NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
+
+#### `monthly_budgets` テーブル
+
+```sql
+CREATE TABLE monthly_budgets (
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  year INTEGER NOT NULL,
+  month INTEGER NOT NULL,
+  budget_amount NUMERIC NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  PRIMARY KEY (user_id, year, month)
+);
+```
+
+#### `expenses` テーブル
+
+```sql
+CREATE TABLE expenses (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  amount NUMERIC NOT NULL,
+  category_id UUID NOT NULL REFERENCES categories(id),
+  expense_date DATE NOT NULL,
+  memo TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
+
+### 5. Google OAuth認証の設定
+
+1. Supabase ダッシュボード > Authentication > Providers > Google を有効化
+2. Google Cloud Console でOAuth認証情報を作成
+3. リダイレクトURIに `https://your-project.supabase.co/auth/v1/callback` を追加
+4. Client ID と Client Secret を Supabase に設定
+
+### 6. 開発サーバーを起動
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[http://localhost:3000](http://localhost:3000) をブラウザで開きます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 使い方
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **ログイン** - Googleアカウントでログイン
+2. **予算設定** - 月次予算を入力
+3. **支出記録** - 日々の支出を登録
+4. **履歴確認** - カレンダービューで過去の支出を確認
 
-## Learn More
+## デプロイ
 
-To learn more about Next.js, take a look at the following resources:
+### Vercelへのデプロイ
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. [Vercel](https://vercel.com) でプロジェクトをインポート
+2. 環境変数 (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`) を設定
+3. デプロイ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/manemori)
 
-## Deploy on Vercel
+## ライセンス
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+MIT License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 開発者
+
+Made with ❤️ by [Hirokatsu](https://github.com/hirokatsu)
