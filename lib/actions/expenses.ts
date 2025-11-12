@@ -87,8 +87,8 @@ export async function getWeeklyExpenses() {
   const monday = new Date(today)
   monday.setDate(today.getDate() + diff)
 
-  const startDate = monday.toISOString().split('T')[0]
-  const endDate = today.toISOString().split('T')[0]
+  const startDate = `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, '0')}-${String(monday.getDate()).padStart(2, '0')}`
+  const endDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
 
   const { data, error } = await supabase
     .from('expenses')

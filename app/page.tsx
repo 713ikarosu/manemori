@@ -27,7 +27,9 @@ export default async function Home() {
   const today = new Date()
   const year = today.getFullYear()
   const month = today.getMonth() + 1
-  const todayStr = today.toISOString().split('T')[0]
+
+  // ローカルタイムゾーンで日付を取得
+  const todayStr = `${year}-${String(month).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
 
   // 並列でデータ取得
   const [monthlyBudget, monthlyExpenses, weeklyExpenses, todayExpenses, categories] =
