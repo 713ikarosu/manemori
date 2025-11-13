@@ -5,13 +5,14 @@ import { useRouter } from 'next/navigation'
 import Calendar from './Calendar'
 import DayDetailModal from './DayDetailModal'
 import { Category } from '@/lib/actions/categories'
+import { DailyData } from '@/lib/actions/calendar'
 import Link from 'next/link'
 
 interface HistoryClientProps {
   initialYear: number
   initialMonth: number
   monthlyBudget: number
-  dailyTotals: { [key: string]: number }
+  dailyData: { [key: string]: DailyData }
   totalExpenses: number
   categories: Category[]
 }
@@ -20,7 +21,7 @@ export default function HistoryClient({
   initialYear,
   initialMonth,
   monthlyBudget,
-  dailyTotals,
+  dailyData,
   totalExpenses,
   categories,
 }: HistoryClientProps) {
@@ -139,7 +140,7 @@ export default function HistoryClient({
         <Calendar
           year={initialYear}
           month={initialMonth}
-          dailyTotals={dailyTotals}
+          dailyData={dailyData}
           monthlyBudget={monthlyBudget}
           onDateClick={handleDateClick}
         />

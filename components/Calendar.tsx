@@ -1,11 +1,12 @@
 'use client'
 
 import { getTodayLocal } from '@/lib/utils/date'
+import { DailyData } from '@/lib/actions/calendar'
 
 interface CalendarProps {
   year: number
   month: number
-  dailyTotals: { [key: string]: number }
+  dailyData: { [key: string]: DailyData }
   monthlyBudget: number
   onDateClick: (date: string) => void
 }
@@ -13,7 +14,7 @@ interface CalendarProps {
 export default function Calendar({
   year,
   month,
-  dailyTotals,
+  dailyData,
   monthlyBudget,
   onDateClick,
 }: CalendarProps) {
@@ -28,13 +29,24 @@ export default function Calendar({
 
     // 前月の空白セル
     for (let i = 0; i < startDayOfWeek; i++) {
-      calendar.push({ date: null, day: null, amount: 0 })
+      calendar.push({
+        date: null,
+        day: null,
+        actualAmount: 0,
+        plannedAmount: 0,
+      })
     }
 
     // 当月の日付セル
     for (let day = 1; day <= daysInMonth; day++) {
       const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-      calendar.push({ date, day, amount: dailyTotals[date] || 0 })
+      const data = dailyData[date] || { actualAmount: 0, plannedAmount: 0 }
+      calendar.push({
+        date,
+        day,
+        actualAmount: data.actualAmount,
+        plannedAmount: data.plannedAmount,
+      })
     }
 
     return calendar
@@ -79,7 +91,9 @@ export default function Calendar({
           }
 
           const isToday = cell.date === today
-          const colorClass = getDailyBudgetColor(cell.amount)
+          const colorClass = getDailyBudgetColor(cell.actualAmount)
+          const hasActual = cell.actualAmount > 0
+          const hasPlanned = cell.plannedAmount > 0
 
           return (
             <button
@@ -89,7 +103,7 @@ export default function Calendar({
                 isToday ? 'bg-indigo-50 ring-2 ring-indigo-500' : ''
               }`}
             >
-              <div className="flex flex-col items-center justify-center h-full">
+              <div className="flex flex-col items-center justify-center h-full gap-0.5">
                 <div
                   className={`text-sm ${
                     isToday ? 'font-bold text-indigo-600' : 'text-gray-700'
@@ -97,11 +111,18 @@ export default function Calendar({
                 >
                   {cell.day}
                 </div>
-                {cell.amount > 0 && (
+                {hasActual && (
                   <div className={`text-xs font-semibold ${colorClass}`}>
-                    {cell.amount >= 10000
-                      ? `${(cell.amount / 1000).toFixed(1)}k`
-                      : cell.amount.toLocaleString()}
+                    {cell.actualAmount >= 10000
+                      ? `${(cell.actualAmount / 1000).toFixed(1)}k`
+                      : cell.actualAmount.toLocaleString()}
+                  </div>
+                )}
+                {hasPlanned && (
+                  <div className="text-xs font-normal text-gray-400">
+                    ({cell.plannedAmount >= 10000
+                      ? `${(cell.plannedAmount / 1000).toFixed(1)}k`
+                      : cell.plannedAmount.toLocaleString()})
                   </div>
                 )}
               </div>

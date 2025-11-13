@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { getMonthlyBudget } from '@/lib/actions/budgets'
-import { getMonthlyExpensesByDay } from '@/lib/actions/calendar'
+import { getMonthlyDataByDay } from '@/lib/actions/calendar'
 import { getCategories } from '@/lib/actions/categories'
 import { getTodayLocal } from '@/lib/utils/date'
 import HistoryClient from '@/components/HistoryClient'
@@ -30,14 +30,14 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
   const month = params.month ? parseInt(params.month) : defaultMonth
 
   // 並列でデータ取得
-  const [monthlyBudget, dailyTotals, categories] = await Promise.all([
+  const [monthlyBudget, dailyData, categories] = await Promise.all([
     getMonthlyBudget(year, month),
-    getMonthlyExpensesByDay(year, month),
+    getMonthlyDataByDay(year, month),
     getCategories(),
   ])
 
-  const totalExpenses = Object.values(dailyTotals).reduce(
-    (sum, amount) => sum + amount,
+  const totalExpenses = Object.values(dailyData).reduce(
+    (sum, data) => sum + data.actualAmount,
     0
   )
 
@@ -46,7 +46,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
       initialYear={year}
       initialMonth={month}
       monthlyBudget={monthlyBudget}
-      dailyTotals={dailyTotals}
+      dailyData={dailyData}
       totalExpenses={totalExpenses}
       categories={categories}
     />
