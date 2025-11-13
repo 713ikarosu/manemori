@@ -50,7 +50,7 @@ export default function Header({ user }: HeaderProps) {
       {/* メニューモーダル */}
       {menuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-50"
+          className="fixed inset-0 bg-primary-dark bg-opacity-30 z-50"
           onClick={() => setMenuOpen(false)}
         >
           <div

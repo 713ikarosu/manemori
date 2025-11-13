@@ -153,7 +153,7 @@ export default function DayDetailModal({
 
   return (
     <div
-      className="fixed inset-0 bg-gray-200 bg-opacity-50 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      className="fixed inset-0 bg-primary-dark bg-opacity-30 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
       onClick={onClose}
     >
       <div
