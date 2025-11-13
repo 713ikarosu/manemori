@@ -59,7 +59,7 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
               placeholder="1000"
               disabled={isLoading}
             />
@@ -95,7 +95,7 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
             type="text"
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
             placeholder="昼食"
             disabled={isLoading}
           />

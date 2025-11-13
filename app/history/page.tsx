@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { getMonthlyBudget } from '@/lib/actions/budgets'
 import { getMonthlyExpensesByDay } from '@/lib/actions/calendar'
 import { getCategories } from '@/lib/actions/categories'
+import { getTodayLocal } from '@/lib/utils/date'
 import HistoryClient from '@/components/HistoryClient'
 
 interface HistoryPageProps {
@@ -20,9 +21,13 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
   }
 
   const params = await searchParams
-  const today = new Date()
-  const year = params.year ? parseInt(params.year) : today.getFullYear()
-  const month = params.month ? parseInt(params.month) : today.getMonth() + 1
+
+  // 日本時間の今日の日付を取得
+  const todayStr = getTodayLocal() // "2025-11-13"
+  const [defaultYear, defaultMonth] = todayStr.split('-').map(Number)
+
+  const year = params.year ? parseInt(params.year) : defaultYear
+  const month = params.month ? parseInt(params.month) : defaultMonth
 
   // 並列でデータ取得
   const [monthlyBudget, dailyTotals, categories] = await Promise.all([

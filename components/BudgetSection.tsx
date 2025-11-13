@@ -89,7 +89,7 @@ export default function BudgetSection({
                   type="number"
                   value={newBudget}
                   onChange={(e) => setNewBudget(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
                   placeholder="50000"
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
