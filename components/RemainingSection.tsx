@@ -1,11 +1,13 @@
 interface RemainingSectionProps {
   monthRemaining: number
+  monthRemainingWithPlanned: number
   weekRemaining: number
   todayTotal: number
 }
 
 export default function RemainingSection({
   monthRemaining,
+  monthRemainingWithPlanned,
   weekRemaining,
   todayTotal,
 }: RemainingSectionProps) {
@@ -23,6 +25,17 @@ export default function RemainingSection({
           className={`text-5xl font-bold ${getMonthRemainingColor(monthRemaining)}`}
         >
           ¥{monthRemaining.toLocaleString()}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 mb-4">
+        <div className="bg-white rounded-lg p-4">
+          <div className="text-sm text-gray-600 mb-1">予定込みの残り</div>
+          <div
+            className={`text-3xl font-bold ${getMonthRemainingColor(monthRemainingWithPlanned)}`}
+          >
+            ¥{monthRemainingWithPlanned.toLocaleString()}
+          </div>
         </div>
       </div>
 

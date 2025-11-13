@@ -6,12 +6,14 @@ import {
   getMonthlyExpenses,
   getWeeklyExpenses,
 } from '@/lib/actions/expenses'
+import { getMonthlyPlannedExpenses } from '@/lib/actions/plannedExpenses'
 import { getCategories } from '@/lib/actions/categories'
 import { getTodayLocal } from '@/lib/utils/date'
 import BudgetSection from '@/components/BudgetSection'
 import RemainingSection from '@/components/RemainingSection'
 import ExpenseForm from '@/components/ExpenseForm'
 import TodayExpenses from '@/components/TodayExpenses'
+import PlannedExpenses from '@/components/PlannedExpenses'
 import Header from '@/components/Header'
 import Link from 'next/link'
 
@@ -31,17 +33,22 @@ export default async function Home() {
   const todayStr = getTodayLocal()
 
   // 並列でデータ取得
-  const [monthlyBudget, monthlyExpenses, weeklyExpenses, todayExpenses, categories] =
+  const [monthlyBudget, monthlyExpenses, weeklyExpenses, todayExpenses, plannedExpenses, categories] =
     await Promise.all([
       getMonthlyBudget(year, month),
       getMonthlyExpenses(year, month),
       getWeeklyExpenses(),
       getExpenses(todayStr),
+      getMonthlyPlannedExpenses(year, month),
       getCategories(),
     ])
 
   const todayTotal = todayExpenses.reduce((sum, exp) => sum + exp.amount, 0)
   const monthRemaining = monthlyBudget - monthlyExpenses
+
+  // 出費予定の合計
+  const plannedTotal = plannedExpenses.reduce((sum, exp) => sum + exp.amount, 0)
+  const monthRemainingWithPlanned = monthRemaining - plannedTotal
 
   // 週の残り計算
   const daysInMonth = new Date(year, month, 0).getDate()
@@ -61,11 +68,19 @@ export default async function Home() {
 
         <RemainingSection
           monthRemaining={monthRemaining}
+          monthRemainingWithPlanned={monthRemainingWithPlanned}
           weekRemaining={weekRemaining}
           todayTotal={todayTotal}
         />
 
         <ExpenseForm categories={categories} />
+
+        <PlannedExpenses
+          plannedExpenses={plannedExpenses}
+          categories={categories}
+          year={year}
+          month={month}
+        />
 
         <TodayExpenses expenses={todayExpenses} categories={categories} />
 
