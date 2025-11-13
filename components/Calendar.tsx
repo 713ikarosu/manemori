@@ -100,13 +100,13 @@ export default function Calendar({
               key={cell.date}
               onClick={() => onDateClick(cell.date!)}
               className={`aspect-square p-1 rounded-lg hover:bg-gray-100 transition-colors ${
-                isToday ? 'bg-indigo-50 ring-2 ring-indigo-500' : ''
+                isToday ? 'bg-secondary ring-2 ring-primary' : ''
               }`}
             >
               <div className="flex flex-col items-center justify-center h-full gap-0.5">
                 <div
                   className={`text-sm ${
-                    isToday ? 'font-bold text-indigo-600' : 'text-gray-700'
+                    isToday ? 'font-bold text-primary' : 'text-gray-700'
                   }`}
                 >
                   {cell.day}

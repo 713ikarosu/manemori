@@ -18,7 +18,7 @@ export default function RemainingSection({
   }
 
   return (
-    <section className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl shadow-sm p-6">
+    <section className="bg-gradient-to-br from-secondary to-background rounded-xl shadow-sm p-6">
       <div className="text-center mb-6">
         <h2 className="text-lg font-semibold text-gray-700 mb-2">残り</h2>
         <div

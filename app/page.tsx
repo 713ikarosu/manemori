@@ -56,7 +56,7 @@ export default async function Home() {
   const weekRemaining = weeklyAverageBudget - weeklyExpenses
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <Header user={user} />
 
       <main className="max-w-2xl mx-auto px-4 py-6 space-y-6">
@@ -87,7 +87,7 @@ export default async function Home() {
         <div className="text-center pb-6">
           <Link
             href="/history"
-            className="inline-block bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+            className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors"
           >
             履歴を見る
           </Link>

@@ -45,7 +45,7 @@ export default function HistoryClient({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* ヘッダー */}
       <header className="bg-white shadow-sm">
         <div className="max-w-2xl mx-auto px-4 py-4">

@@ -89,7 +89,7 @@ export default function BudgetSection({
                   type="number"
                   value={newBudget}
                   onChange={(e) => setNewBudget(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-gray-900"
                   placeholder="50000"
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
@@ -107,7 +107,7 @@ export default function BudgetSection({
               </button>
               <button
                 onClick={handleSave}
-                className="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
+                className="flex-1 px-4 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark transition-colors disabled:opacity-50"
                 disabled={isLoading}
               >
                 {isLoading ? '保存中...' : '保存'}

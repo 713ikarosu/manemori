@@ -21,16 +21,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-secondary to-background">
       <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full mx-4">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">まねもり</h1>
+          <h1 className="text-4xl font-bold text-primary mb-2">まねもり</h1>
           <p className="text-gray-600">日々の出費を記録しよう</p>
         </div>
 
         <button
           onClick={handleGoogleLogin}
-          className="w-full bg-white border-2 border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center gap-3"
+          className="w-full bg-white border-2 border-primary text-gray-700 font-semibold py-3 px-4 rounded-lg hover:bg-secondary transition-colors duration-200 flex items-center justify-center gap-3"
         >
           <svg className="w-6 h-6" viewBox="0 0 24 24">
             <path

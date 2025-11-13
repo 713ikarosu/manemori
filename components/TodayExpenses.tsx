@@ -90,13 +90,13 @@ export default function TodayExpenses({
                     type="number"
                     value={editAmount}
                     onChange={(e) => setEditAmount(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-gray-900"
                     disabled={isLoading}
                   />
                   <select
                     value={editCategoryId}
                     onChange={(e) => setEditCategoryId(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white"
                     disabled={isLoading}
                   >
                     {categories.map((category) => (
@@ -110,7 +110,7 @@ export default function TodayExpenses({
                   type="text"
                   value={editMemo}
                   onChange={(e) => setEditMemo(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-gray-900"
                   placeholder="メモ"
                   disabled={isLoading}
                 />
@@ -124,7 +124,7 @@ export default function TodayExpenses({
                   </button>
                   <button
                     onClick={() => handleSaveEdit(expense.id)}
-                    className="flex-1 px-3 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors disabled:opacity-50"
+                    className="flex-1 px-3 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors disabled:opacity-50"
                     disabled={isLoading}
                   >
                     {isLoading ? '保存中...' : '保存'}

@@ -24,7 +24,7 @@ export default function Header({ user }: HeaderProps) {
     <>
       <header className="bg-white shadow-sm">
         <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-indigo-600">まねもり</h1>
+          <h1 className="text-2xl font-bold text-primary">まねもり</h1>
           <button
             onClick={() => setMenuOpen(true)}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
