@@ -86,7 +86,7 @@ export default function Header({ user }: HeaderProps) {
                     router.push('/history')
                     setMenuOpen(false)
                   }}
-                  className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors text-gray-900"
                 >
                   履歴を見る
                 </button>
