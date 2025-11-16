@@ -91,6 +91,15 @@ export default function Header({ user }: HeaderProps) {
                   履歴を見る
                 </button>
                 <button
+                  onClick={() => {
+                    router.push('/settings/categories')
+                    setMenuOpen(false)
+                  }}
+                  className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors text-gray-900"
+                >
+                  カテゴリ管理
+                </button>
+                <button
                   onClick={handleLogout}
                   className="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                 >
