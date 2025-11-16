@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { deleteExpense, updateExpense } from '@/lib/actions/expenses'
+import { addExpense, deleteExpense, updateExpense } from '@/lib/actions/expenses'
 import {
   deletePlannedExpense,
   updatePlannedExpense,
@@ -53,6 +53,12 @@ export default function DayDetailModal({
   const [editCategoryId, setEditCategoryId] = useState('')
   const [editMemo, setEditMemo] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
+
+  // 新規追加フォーム用のstate
+  const [isAdding, setIsAdding] = useState(false)
+  const [newAmount, setNewAmount] = useState('')
+  const [newCategoryId, setNewCategoryId] = useState(categories[0]?.id || '')
+  const [newMemo, setNewMemo] = useState('')
 
   useEffect(() => {
     loadData()
@@ -134,6 +140,34 @@ export default function DayDetailModal({
     } catch (error) {
       console.error('Error deleting:', error)
       alert('削除に失敗しました')
+    } finally {
+      setIsProcessing(false)
+    }
+  }
+
+  const handleAddExpense = async () => {
+    if (!newAmount || !newCategoryId) {
+      alert('金額とカテゴリを入力してください')
+      return
+    }
+
+    setIsProcessing(true)
+    try {
+      await addExpense({
+        amount: parseInt(newAmount),
+        category_id: newCategoryId,
+        memo: newMemo,
+        expense_date: date,
+      })
+      // フォームをリセット
+      setNewAmount('')
+      setNewMemo('')
+      setIsAdding(false)
+      await loadData()
+      router.refresh()
+    } catch (error) {
+      console.error('Error adding expense:', error)
+      alert('出費の追加に失敗しました')
     } finally {
       setIsProcessing(false)
     }
@@ -325,6 +359,77 @@ export default function DayDetailModal({
                     )}
                   </div>
                 ))}
+              </div>
+
+              {/* 新規追加フォーム */}
+              <div className="mt-6">
+                {isAdding ? (
+                  <div className="p-4 bg-primary-light bg-opacity-10 rounded-lg border border-primary">
+                    <h3 className="text-md font-semibold text-gray-700 mb-3">
+                      出費を追加
+                    </h3>
+                    <div className="space-y-3">
+                      <div className="flex gap-2">
+                        <input
+                          type="number"
+                          value={newAmount}
+                          onChange={(e) => setNewAmount(e.target.value)}
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-gray-900"
+                          placeholder="金額"
+                          disabled={isProcessing}
+                        />
+                        <select
+                          value={newCategoryId}
+                          onChange={(e) => setNewCategoryId(e.target.value)}
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+                          disabled={isProcessing}
+                        >
+                          {categories.map((category) => (
+                            <option key={category.id} value={category.id}>
+                              {category.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <input
+                        type="text"
+                        value={newMemo}
+                        onChange={(e) => setNewMemo(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-gray-900"
+                        placeholder="メモ（任意）"
+                        disabled={isProcessing}
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            setIsAdding(false)
+                            setNewAmount('')
+                            setNewMemo('')
+                          }}
+                          className="flex-1 px-3 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                          disabled={isProcessing}
+                        >
+                          キャンセル
+                        </button>
+                        <button
+                          onClick={handleAddExpense}
+                          className="flex-1 px-3 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary-dark transition-colors disabled:opacity-50"
+                          disabled={isProcessing}
+                        >
+                          {isProcessing ? '追加中...' : '追加'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setIsAdding(true)}
+                    className="w-full py-3 border-2 border-dashed border-primary text-primary rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors"
+                    disabled={isProcessing}
+                  >
+                    + 出費を追加
+                  </button>
+                )}
               </div>
 
               {/* 予定セクション */}

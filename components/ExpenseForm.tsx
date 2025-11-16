@@ -8,12 +8,14 @@ import { useRouter } from 'next/navigation'
 
 interface ExpenseFormProps {
   categories: Category[]
+  initialDate?: string // オプショナルな初期日付（履歴画面から使う場合）
 }
 
-export default function ExpenseForm({ categories }: ExpenseFormProps) {
+export default function ExpenseForm({ categories, initialDate }: ExpenseFormProps) {
   const router = useRouter()
   const [amount, setAmount] = useState('')
   const [categoryId, setCategoryId] = useState(categories[0]?.id || '')
+  const [expenseDate, setExpenseDate] = useState(initialDate || getTodayLocal())
   const [memo, setMemo] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -31,12 +33,13 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
         amount: parseInt(amount),
         category_id: categoryId,
         memo,
-        expense_date: getTodayLocal(),
+        expense_date: expenseDate,
       })
 
       // フォームをリセット
       setAmount('')
       setMemo('')
+      setExpenseDate(getTodayLocal()) // 日付もリセット（今日に戻す）
       router.refresh()
     } catch (error) {
       console.error('Error adding expense:', error)
@@ -85,6 +88,19 @@ export default function ExpenseForm({ categories }: ExpenseFormProps) {
               </option>
             ))}
           </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            日付
+          </label>
+          <input
+            type="date"
+            value={expenseDate}
+            onChange={(e) => setExpenseDate(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-gray-900"
+            disabled={isLoading}
+          />
         </div>
 
         <div>
