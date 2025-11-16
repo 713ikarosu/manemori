@@ -4,6 +4,7 @@ import { User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import Image from 'next/image'
 
 interface HeaderProps {
   user: User
@@ -24,7 +25,16 @@ export default function Header({ user }: HeaderProps) {
     <>
       <header className="bg-white shadow-sm">
         <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-primary">まねもり</h1>
+          <h1 className="flex items-center">
+            <Image
+              src="/manemori-logo_inline_trans.png"
+              alt="まねもり"
+              width={150}
+              height={50}
+              priority
+              className="h-10 w-auto"
+            />
+          </h1>
           <button
             onClick={() => setMenuOpen(true)}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"

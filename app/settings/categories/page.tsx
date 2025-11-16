@@ -3,6 +3,12 @@ import { redirect } from 'next/navigation'
 import { getCategories } from '@/lib/actions/categories'
 import CategoryManagement from '@/components/CategoryManagement'
 import Link from 'next/link'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'カテゴリ管理',
+  description: '出費のカテゴリを追加・編集・削除できます。',
+}
 
 export default async function CategoriesPage() {
   const supabase = await createClient()

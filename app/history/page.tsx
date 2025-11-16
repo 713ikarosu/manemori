@@ -5,6 +5,12 @@ import { getMonthlyDataByDay } from '@/lib/actions/calendar'
 import { getCategories } from '@/lib/actions/categories'
 import { getTodayLocal } from '@/lib/utils/date'
 import HistoryClient from '@/components/HistoryClient'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: '履歴',
+  description: 'カレンダー形式で過去の出費を確認できます。',
+}
 
 interface HistoryPageProps {
   searchParams: Promise<{ year?: string; month?: string }>
