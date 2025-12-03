@@ -52,7 +52,7 @@ export default async function Home() {
 
   // 週の残り計算
   const daysInMonth = new Date(year, month, 0).getDate()
-  const weeklyAverageBudget = (monthlyBudget / daysInMonth) * 7
+  const weeklyAverageBudget = Math.floor((monthlyBudget / daysInMonth) * 7)
   const weekRemaining = weeklyAverageBudget - weeklyExpenses
 
   return (
