@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(cat:*)",
+      "Skill(frontend-design)",
+      "Bash(npm run build:*)",
+      "Bash(lsof:*)",
+      "Bash(ps:*)"
     ],
     "deny": [],
     "ask": []
