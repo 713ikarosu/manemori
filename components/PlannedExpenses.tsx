@@ -77,10 +77,32 @@ export default function PlannedExpenses({
   }
 
   const handleSaveEdit = async (expenseId: string) => {
+    const amountValue = parseInt(editAmount)
+
+    if (!editAmount.trim() || isNaN(amountValue)) {
+      alert('有効な金額を入力してください')
+      return
+    }
+
+    if (amountValue < 0) {
+      alert('金額は0以上の値を入力してください')
+      return
+    }
+
+    if (!editCategoryId) {
+      alert('カテゴリを選択してください')
+      return
+    }
+
+    if (!editPlannedDate) {
+      alert('予定日を選択してください')
+      return
+    }
+
     setIsLoading(true)
     try {
       await updatePlannedExpense(expenseId, {
-        amount: parseInt(editAmount),
+        amount: amountValue,
         category_id: editCategoryId,
         planned_date: editPlannedDate,
         memo: editMemo,

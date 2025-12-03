@@ -128,7 +128,7 @@ export default function Header({ user }: HeaderProps) {
                       router.push(item.path)
                       setMenuOpen(false)
                     }}
-                    className="w-full group flex items-center gap-3 px-4 py-3.5 hover:bg-primary-subtle rounded-xl transition-smooth text-foreground hover:text-primary"
+                    className="w-full group flex items-center gap-3 px-4 py-3.5 hover:bg-primary-subtle rounded-xl transition-smooth text-foreground hover:text-primary animate-fade-in"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
                     <svg
@@ -188,11 +188,11 @@ export default function Header({ user }: HeaderProps) {
               <div className="p-6 border-t border-border-subtle bg-secondary/30">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-medium">
-                    {user.email?.[0].toUpperCase()}
+                    {user.email?.[0]?.toUpperCase() || 'U'}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-foreground truncate">
-                      {user.email}
+                      {user.email || 'ユーザー'}
                     </p>
                     <p className="text-xs text-foreground-muted">
                       アカウント

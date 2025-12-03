@@ -32,10 +32,36 @@ export default function BudgetSection({
     }
   }, [isEditing])
 
+  // Handle Escape key to close modal
+  useEffect(() => {
+    if (!isEditing) return
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !isLoading) {
+        setIsEditing(false)
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [isEditing, isLoading])
+
   const handleSave = async () => {
+    const budgetValue = parseInt(newBudget)
+
+    if (!newBudget.trim() || isNaN(budgetValue)) {
+      alert('有効な金額を入力してください')
+      return
+    }
+
+    if (budgetValue < 0) {
+      alert('予算は0以上の値を入力してください')
+      return
+    }
+
     setIsLoading(true)
     try {
-      await setMonthlyBudget(year, month, parseInt(newBudget))
+      await setMonthlyBudget(year, month, budgetValue)
       setIsEditing(false)
       router.refresh()
     } catch (error) {
@@ -103,14 +129,18 @@ export default function BudgetSection({
 
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
             <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="budget-modal-title"
+              aria-describedby="budget-modal-description"
               className="bg-surface rounded-2xl border border-border shadow-xl max-w-md w-full pointer-events-auto animate-fade-in-scale"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="p-6 border-b border-border-subtle">
-                <h3 className="text-2xl font-display font-medium text-foreground tracking-tight">
+                <h3 id="budget-modal-title" className="text-2xl font-display font-medium text-foreground tracking-tight">
                   {month}月の予算を設定
                 </h3>
-                <p className="text-sm text-foreground-muted mt-1">
+                <p id="budget-modal-description" className="text-sm text-foreground-muted mt-1">
                   月の予算金額を入力してください
                 </p>
               </div>

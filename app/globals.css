@@ -206,15 +206,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .animate-fade-in {
-  animation: fadeIn var(--transition-base) ease-out;
+  animation: fadeIn var(--transition-base);
 }
 
 .animate-fade-in-scale {
-  animation: fadeInScale var(--transition-slow) cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: fadeInScale var(--transition-spring);
 }
 
 .animate-slide-in-right {
-  animation: slideInRight var(--transition-base) ease-out;
+  animation: slideInRight var(--transition-base);
 }
 
 /* Utility classes */

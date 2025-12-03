@@ -2,22 +2,26 @@
 
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import Image from 'next/image'
 
 export default function LoginPage() {
   const router = useRouter()
   const supabase = createClient()
+  const [error, setError] = useState<string | null>(null)
 
   const handleGoogleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
+    setError(null)
+    const { error: loginError } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
       },
     })
 
-    if (error) {
-      console.error('Error logging in:', error.message)
+    if (loginError) {
+      console.error('Error logging in:', loginError.message)
+      setError('ログインに失敗しました。もう一度お試しください。')
     }
   }
 
@@ -52,6 +56,13 @@ export default function LoginPage() {
               お金との関係をもっと心地よく
             </p>
           </div>
+
+          {/* Error message */}
+          {error && (
+            <div className="mb-4 p-4 bg-status-error/10 border border-status-error/20 rounded-xl text-status-error text-sm text-center animate-fade-in">
+              {error}
+            </div>
+          )}
 
           {/* Login button */}
           <button

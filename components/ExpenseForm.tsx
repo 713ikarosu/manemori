@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { addExpense } from '@/lib/actions/expenses'
 import { Category } from '@/lib/actions/categories'
 import { getTodayLocal } from '@/lib/utils/date'
@@ -19,6 +19,15 @@ export default function ExpenseForm({ categories, initialDate }: ExpenseFormProp
   const [memo, setMemo] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [justAdded, setJustAdded] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,7 +48,10 @@ export default function ExpenseForm({ categories, initialDate }: ExpenseFormProp
 
       // Success feedback
       setJustAdded(true)
-      setTimeout(() => setJustAdded(false), 2000)
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+      timeoutRef.current = setTimeout(() => setJustAdded(false), 2000)
 
       // フォームをリセット
       setAmount('')

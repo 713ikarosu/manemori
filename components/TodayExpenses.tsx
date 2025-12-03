@@ -101,7 +101,7 @@ export default function TodayExpenses({
         {expenses.map((expense, index) => (
           <div
             key={expense.id}
-            className="group relative bg-background hover:bg-secondary/30 rounded-xl border border-border-subtle transition-smooth p-4"
+            className="group relative bg-background hover:bg-secondary/30 rounded-xl border border-border-subtle transition-smooth p-4 animate-fade-in"
             style={{ animationDelay: `${index * 50}ms` }}
           >
             {editingId === expense.id ? (
@@ -180,10 +180,10 @@ export default function TodayExpenses({
                     )}
                   </div>
 
-                  <div className="flex gap-1 ml-3 opacity-0 group-hover:opacity-100 transition-smooth">
+                  <div className="flex gap-1 ml-3 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-smooth">
                     <button
                       onClick={() => handleEdit(expense)}
-                      className="p-2 hover:bg-primary-subtle rounded-lg transition-smooth"
+                      className="p-2 hover:bg-primary-subtle focus:bg-primary-subtle focus:outline-none focus:ring-2 focus:ring-primary rounded-lg transition-smooth"
                       aria-label="編集"
                       disabled={isLoading}
                     >
@@ -203,7 +203,7 @@ export default function TodayExpenses({
                     </button>
                     <button
                       onClick={() => handleDelete(expense.id)}
-                      className="p-2 hover:bg-status-error/10 rounded-lg transition-smooth"
+                      className="p-2 hover:bg-status-error/10 focus:bg-status-error/10 focus:outline-none focus:ring-2 focus:ring-status-error rounded-lg transition-smooth"
                       aria-label="削除"
                       disabled={isLoading}
                     >
