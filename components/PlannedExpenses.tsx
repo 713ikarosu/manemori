@@ -366,15 +366,15 @@ export default function PlannedExpenses({
                       )}
                     </div>
 
-                    <div className="flex gap-1 ml-3 opacity-0 group-hover:opacity-100 transition-smooth">
+                    <div className="flex gap-1 ml-3 transition-smooth">
                       <button
                         onClick={() => handleEdit(expense)}
-                        className="p-2 hover:bg-primary-subtle rounded-lg transition-smooth"
+                        className="p-2 bg-primary-subtle/50 hover:bg-primary-subtle rounded-lg transition-smooth"
                         aria-label="編集"
                         disabled={isLoading}
                       >
                         <svg
-                          className="w-4 h-4 text-foreground-muted hover:text-primary transition-smooth"
+                          className="w-4 h-4 text-primary transition-smooth"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -389,12 +389,12 @@ export default function PlannedExpenses({
                       </button>
                       <button
                         onClick={() => handleDelete(expense.id)}
-                        className="p-2 hover:bg-status-error/10 rounded-lg transition-smooth"
+                        className="p-2 bg-status-error/10 hover:bg-status-error/20 rounded-lg transition-smooth"
                         aria-label="削除"
                         disabled={isLoading}
                       >
                         <svg
-                          className="w-4 h-4 text-foreground-muted hover:text-status-error transition-smooth"
+                          className="w-4 h-4 text-status-error transition-smooth"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
