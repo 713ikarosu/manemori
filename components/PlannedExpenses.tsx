@@ -140,7 +140,7 @@ export default function PlannedExpenses({
   const total = plannedExpenses.reduce((sum, exp) => sum + exp.amount, 0)
 
   return (
-    <section className="bg-surface rounded-2xl border border-border p-6 animate-fade-in">
+    <section className="bg-surface rounded-2xl border border-border py-6 px-4 animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-accent-muted flex items-center justify-center">

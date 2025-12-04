@@ -6,7 +6,12 @@
       "Skill(frontend-design)",
       "Bash(npm run build:*)",
       "Bash(lsof:*)",
-      "Bash(ps:*)"
+      "Bash(ps:*)",
+      "Bash(node --version:*)",
+      "Bash(npm --version:*)",
+      "Bash(npm update:*)",
+      "Bash(rm:*)",
+      "Bash(npm install)"
     ],
     "deny": [],
     "ask": []
