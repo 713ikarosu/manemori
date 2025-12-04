@@ -164,16 +164,16 @@ export default function TodayExpenses({
               <>
                 <div className="flex items-start justify-between">
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1.5">
+                    <div className="flex items-center gap-2 mb-2">
                       <span className="inline-flex px-2.5 py-0.5 rounded-lg bg-primary-subtle text-primary text-sm font-medium">
                         {expense.categories?.name || 'カテゴリなし'}
                       </span>
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-xs font-mono opacity-70">¥</span>
-                        <span className="text-xl font-display font-semibold text-foreground financial-number">
-                          {expense.amount.toLocaleString()}
-                        </span>
-                      </div>
+                    </div>
+                    <div className="flex items-baseline gap-1 mb-1.5">
+                      <span className="text-xs font-mono opacity-70">¥</span>
+                      <span className="text-xl font-display font-semibold text-foreground financial-number">
+                        {expense.amount.toLocaleString()}
+                      </span>
                     </div>
                     {expense.memo && (
                       <p className="text-sm text-foreground-muted mt-1 line-clamp-2">{expense.memo}</p>

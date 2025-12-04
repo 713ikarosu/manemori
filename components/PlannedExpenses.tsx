@@ -344,7 +344,7 @@ export default function PlannedExpenses({
                 <>
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-accent-muted/50 text-accent text-sm font-medium">
                           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -354,12 +354,12 @@ export default function PlannedExpenses({
                         <span className="inline-flex px-2.5 py-0.5 rounded-lg bg-primary-subtle text-primary text-sm font-medium">
                           {expense.categories?.name || 'カテゴリなし'}
                         </span>
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-xs font-mono opacity-70">¥</span>
-                          <span className="text-xl font-display font-semibold text-foreground financial-number">
-                            {expense.amount.toLocaleString()}
-                          </span>
-                        </div>
+                      </div>
+                      <div className="flex items-baseline gap-1 mb-1.5">
+                        <span className="text-xs font-mono opacity-70">¥</span>
+                        <span className="text-xl font-display font-semibold text-foreground financial-number">
+                          {expense.amount.toLocaleString()}
+                        </span>
                       </div>
                       {expense.memo && (
                         <p className="text-sm text-foreground-muted mt-1 line-clamp-2">{expense.memo}</p>
