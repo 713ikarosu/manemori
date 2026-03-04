@@ -72,47 +72,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 ### 4. データベースのセットアップ
 
-Supabaseのダッシュボードで以下のテーブルを作成：
+Supabaseのダッシュボードで以下のテーブルを作成してください：
 
-#### `categories` テーブル
+- `categories` - 支出カテゴリ（ユーザーごとに管理）
+- `monthly_budgets` - 月次予算（ユーザー・年・月で一意）
+- `expenses` - 支出記録（カテゴリと紐付け）
 
-```sql
-CREATE TABLE categories (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  name TEXT NOT NULL,
-  sort_order INTEGER NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-```
-
-#### `monthly_budgets` テーブル
-
-```sql
-CREATE TABLE monthly_budgets (
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  year INTEGER NOT NULL,
-  month INTEGER NOT NULL,
-  budget_amount NUMERIC NOT NULL,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  PRIMARY KEY (user_id, year, month)
-);
-```
-
-#### `expenses` テーブル
-
-```sql
-CREATE TABLE expenses (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  amount NUMERIC NOT NULL,
-  category_id UUID NOT NULL REFERENCES categories(id),
-  expense_date DATE NOT NULL,
-  memo TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-```
+各テーブルのスキーマ詳細は、リポジトリをクローン後にコードを参照してください。
 
 ### 5. Google OAuth認証の設定
 
